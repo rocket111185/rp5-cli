@@ -25,7 +25,7 @@ This program has parser only for rp5.ru, that is why URL should
 start from `'https://rp5.ru/'`.
 
 The output is a set of named tables (name is day of the week) with
-rows in format `TIME | TEMPERATURE | PRECIPITAION`.
+rows in format `TIME | TEMPERATURE | PRECIPITATION`.
 
 For example (one of the days):
 ```
