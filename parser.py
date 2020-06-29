@@ -1,36 +1,44 @@
-#import urllib.request as req
+from urllib.request import urlopen
 from bs4 import BeautifulSoup as bs
 import lxml.html as html
+from tabulate import tabulate
+import time
 
-# url = input('URL for the forecast\n> ')
-#url = 'https://rp5.ru/%D0%9F%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0_%D0%B2_%D0%A2%D0%B0%D1%83%D0%B6%D0%BD%D0%BE%D0%BC'
+url = input('URL for the forecast\n> ')
+if len(url) < 1:
+  url = 'https://rp5.ru/%D0%9F%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0_%D0%B2_%D0%A2%D0%B0%D1%83%D0%B6%D0%BD%D0%BE%D0%BC'
 
-HOURS_COUNT = 0
+page = urlopen(url).read()
+data = html.document_fromstring(page)
 
+#file = open('weather.html').read()
+#data = html.fromstring(file)
 
-#page = req.urlopen(url)
-#data = html.document_fromstring(page.read())
-
-file = open('weather.html').read()
-data = html.fromstring(file)
-soup = bs(file, 'html.parser')
+soup = bs(page, 'html.parser')
 tags = soup('td')
 hours = []
+
+week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+day_is_today = time.strftime('%A')
+day_number = week.index(day_is_today)
+current_hour = time.strftime('%A')
+NUMBER_OF_DAYS_IN_WEEK = len(week)
 
 record_mode = False
 for tag in tags:
   if tag.get('colspan') == '2':
     contents = tag.text
     if len(contents) == 2:
-      HOURS_COUNT += 1
-      hours.append(contents)
+      hours.append(contents + ':00')
       record_mode = True
     elif record_mode is True: break
 
-print(hours)
+HOURS_COUNT = len(hours)
+if hours[0] < current_hour:
+  day_number -= 1
 
 temp = data.xpath('//div[@class="t_0"]//span[@class="otstup"]/following-sibling::text()')
-temp = temp[:HOURS_COUNT]
+temp = [ item + ' C' for item in temp[:HOURS_COUNT] ]
 
 rain_raw = data.xpath('//div[@class="pr_0"]//div')
 rain = []
@@ -40,10 +48,21 @@ for el in rain_raw:
   rain_inf = el.get('class')
   if not rain_inf.endswith('left'):
     rain_inf = rain_inf[-1]
-    rain.append(rain_inf)
+    rain.append(rain_inf + ' mm')
     rain_ind += 1
   if rain_ind is HOURS_COUNT:
     break
 
-print(temp)
-print(rain)
+table = dict()
+current_hour = hours[0]
+for i in range(len(hours)):
+  if hours[i] <= current_hour:
+    day_number += 1
+    if day_number is NUMBER_OF_DAYS_IN_WEEK:
+      day_number = 0
+    day_name = week[day_number]
+    table[day_name] = []
+  table[day_name].append(hours[i] + ' | ' + temp[i] + ' | ' + rain[i])
+  current_hour = hours[i]
+
+print(tabulate(table, headers=table.keys()))
