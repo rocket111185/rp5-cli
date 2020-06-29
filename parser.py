@@ -11,9 +11,6 @@ if len(url) < 1:
 page = urlopen(url).read()
 data = html.document_fromstring(page)
 
-#file = open('weather.html').read()
-#data = html.fromstring(file)
-
 soup = bs(page, 'html.parser')
 tags = soup('td')
 hours = []
