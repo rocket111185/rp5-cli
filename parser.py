@@ -38,7 +38,7 @@ if hours[0] < current_hour:
   day_number -= 1
 
 temp = data.xpath('//div[@class="t_0"]//span[@class="otstup"]/following-sibling::text()')
-temp = [ item + ' C' for item in temp[:HOURS_COUNT] ]
+temp = [ item + '°C' for item in temp[:HOURS_COUNT] ]
 
 rain_raw = data.xpath('//div[@class="pr_0"]//div')
 rain = []
@@ -65,4 +65,7 @@ for i in range(len(hours)):
   table[day_name].append(hours[i] + ' | ' + temp[i] + ' | ' + rain[i])
   current_hour = hours[i]
 
-print(tabulate(table, headers=table.keys()))
+for key in table:
+  temp  = dict()
+  temp[key] = table[key]
+  print(tabulate(temp, headers=temp.keys()) + '\n')
