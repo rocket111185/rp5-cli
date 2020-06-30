@@ -19,10 +19,8 @@ To launch the program, type:
 ```bash
 $ python3 parser.py
 ```
-It will prompt for the URL.
-
-This program has parser only for rp5.ru, that is why URL should
-start from `'https://rp5.ru/'`.
+The program will prompt you for the city name, and
+then it will search for the proper URL, parse...
 
 The output is a set of named tables (name is day of the week) with
 rows in format `TIME | TEMPERATURE | PRECIPITATION`.
