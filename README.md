@@ -8,6 +8,7 @@ The CLI client for RP5 weather forecasting site.
 * `bs4` (BeautifulSoup)
 * `lxml`
 * `tabulate`
+* `google`
 
 You can resolve the dependencies with one command:
 ```bash
