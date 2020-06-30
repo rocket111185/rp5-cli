@@ -28,4 +28,8 @@ for link in urls:
   print(unquote(urlparse(link).path))
 
 # All the details in rp5_parser.py
-print_weather(url)
+try:
+  print_weather(url)
+except:
+  print('''It is possible that the incorrect name of city was written.
+Try another.''')
