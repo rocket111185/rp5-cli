@@ -8,6 +8,7 @@ The CLI client for RP5 weather forecasting site.
 * `bs4` (BeautifulSoup)
 * `lxml`
 * `tabulate`
+* `google`
 
 You can resolve the dependencies with one command:
 ```bash
@@ -17,7 +18,7 @@ $ pip3 install bs4 lxml tabulate
 ## Usage
 To launch the program, type:
 ```bash
-$ python3 parser.py
+$ python3 main.py
 ```
 The program will prompt you for the city name, and
 then it will search for the proper URL, parse...
