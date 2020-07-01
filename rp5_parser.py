@@ -15,7 +15,7 @@ def print_weather(url):
 
   # Initial names of the week
   week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-  # Calculate the position of name of the 
+  # Calculate the position of name of the
   # today's name in the `week` array
   day_is_today = time.strftime('%A')
   day_number = week.index(day_is_today)
@@ -67,7 +67,7 @@ def print_weather(url):
     temp[i] = curr_temp + '°C'
 
   # Get the precipitation tags with this scheme.
-  # Authors of the RP5 site, burn in hell, twice! 
+  # Authors of the RP5 site, burn in hell, twice!
   rain_raw = data.xpath('//div[@class="pr_0"]//div')
   # This array will contain values, prepared for
   # the output.
@@ -82,7 +82,7 @@ def print_weather(url):
     rain_inf = tag.get('class')
     # The smth_left values are not informative.
     if not rain_inf.endswith('left'):
-      # The last symbol is the needed 
+      # The last symbol is the needed
       # precipitation value.
       rain_inf = rain_inf[-1]
       # Make the value fancy, again
@@ -99,8 +99,8 @@ def print_weather(url):
   # situation is ok.
   # But when the forecast for today is available,
   # it becomed signed as tomorrow day.
-  current_hour = time.strftime('%A')
-  if hours[0] < current_hour:
+  current_hour = time.strftime('%H')
+  if hours[0] > current_hour:
     day_number -= 1
 
   # The assosiative table (key - day, value -

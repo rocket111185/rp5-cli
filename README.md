@@ -10,10 +10,7 @@ The CLI client for RP5 weather forecasting site.
 * `tabulate`
 * `google`
 
-You can resolve the dependencies with one command:
-```bash
-$ pip3 install bs4 lxml tabulate
-```
+Installation script will resolve it itself.
 
 ## Installation
 
