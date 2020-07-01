@@ -1,0 +1,21 @@
+#!/bin/bash
+
+show_usage()
+{
+    printf 'rp5-cli is the CLI client for RP5 site.\n
+Usage: rp5-cli [NAME_OF_CITY | -h | --help]\n';
+}
+
+case $1 in
+
+    '-h' | '--help')
+        show_usage;
+        ;;
+    '')
+        python3 /usr/share/rp5-cli/main.py;
+        ;;
+    *)
+        yes "$1" | python3 /usr/share/rp5-cli/main.py;
+    ;;
+
+esac
