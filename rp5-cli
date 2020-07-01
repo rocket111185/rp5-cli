@@ -15,7 +15,7 @@ case $1 in
         python3 /usr/share/rp5-cli/main.py;
         ;;
     *)
-        yes "$1" | python3 /usr/share/rp5-cli/main.py;
+        yes "$*" | python3 /usr/share/rp5-cli/main.py;
     ;;
 
 esac
