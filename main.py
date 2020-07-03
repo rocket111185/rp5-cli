@@ -11,7 +11,7 @@ try:
     city_name = input('''Welcome to RP5-CLI!
 It's easy-to-use RP5 forecast service client.
 All you need, is to input the name of desired city.\n> ''')
-except EOFError:
+except (EOFError, KeyboardInterrupt):
     print()
     exit(0)
 
