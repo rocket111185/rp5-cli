@@ -3,7 +3,7 @@ from urllib.error import HTTPError
 from googlesearch import search
 from rp5_parser import print_weather
 
-# The default value for `city_name`
+# Initialize variable `city_name`
 city_name = ''
 
 try:

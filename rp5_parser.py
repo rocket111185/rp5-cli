@@ -41,8 +41,7 @@ def print_weather(url):
             contents = tag.text
             # Only the hour values have the length of 2
             if len(contents) == 2:
-                # Transform 'HH' into readable 'HH:00'
-                hours.append(contents + ':00')
+                hours.append(contents)
                 record_mode = True
             elif record_mode is True:
                 break
@@ -52,21 +51,28 @@ def print_weather(url):
 
     # Get the temperature values with this scheme.
     # Authors of the RP5 site, burn in hell!
-    temp = data.xpath('//div[@class="t_0"]//span[@class="otstup"]/following-sibling::text()')
+    temp_raw = data.xpath('//div[@class="t_0"]//b/text()')
+    # This array will contain values, prepared for
+    # the output.
+    temp = []
     # Only the first hours_count values are needed
     # (they are from 6-day table)
-    temp = temp[:hours_count]
-    # It's time to beautify the values
-    for i in range(len(temp)):
-        curr_temp = temp[i]
-        # If the value is one-digit, the row becomes
-        # ugly (most of values are two-digit).
-        # In this case, just put a space at the
-        # beginning of the string.
-        if len(curr_temp) < 2:
-            curr_temp = ' ' + curr_temp
-        # Add fancy degree sign
-        temp[i] = curr_temp + '°C'
+    temp_count = 0
+
+    # Add needed values to the `rain` from `rain_raw`
+    for t in temp_raw:
+        # Positive values of temperature are '+' and exact value,
+        # dividen by <span> tag.
+        # So, we can just ignore '+' signs and go ahead.
+        if t != '+':
+            # There are can be '-TT' values of temperature,
+            # that's why it's useful to add spaces.
+            while len(t) < 3:
+                t = ' ' + t
+            temp.append(t)
+            temp_count += 1
+        if temp_count is hours_count: break
+
 
     # Get the precipitation tags with this scheme.
     # Authors of the RP5 site, burn in hell, twice!
@@ -122,7 +128,7 @@ def print_weather(url):
             day_name = week[day_number]
             tables[day_name] = []
         # Write the row to the array
-        tables[day_name].append(hours[i] + ' | ' + temp[i] + ' | ' + rain[i])
+        tables[day_name].append(hours[i] + ':00 |' + temp[i] + '°C | ' + rain[i])
         # It would be right to call it `previous_hour`...
         current_hour = hours[i]
 

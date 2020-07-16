@@ -62,6 +62,10 @@ $ rp5-cli The capital of Great Britain
 But the prompt will appear, again.
 In this case, don't pay any attention, just wait.
 
+You can just press Enter on the prompt (you entered nothing), and there
+will be forecast for the `default_city` (you can change it in `main.py`
+before the installation).
+
 If the name of city isn't in RP5 database, an error will occur.
 So you must try type another name of city.
 
