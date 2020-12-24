@@ -90,14 +90,18 @@ def print_weather(url):
         rain_inf = tag.get('class')
         # The smth_left values are not informative.
         if not rain_inf.endswith('left'):
-            # The last symbol is the needed
+            # Find the symbol which is the needed
             # precipitation value.
-            rain_inf = rain_inf[-1]
+            rain_last_ind = 0
+            while True:
+              rain_last_ind = rain_last_ind + 1
+              rain_val = rain_inf[-rain_last_ind]
+              if rain_val.isnumeric(): break
             # Make the value fancy, again
-            # NOTE: ' sign means nothing.
+            # NOTE: . sign means nothing.
             # It's just a way to make table
             # symmetric.
-            rain.append(rain_inf + '\' mm')
+            rain.append(rain_val + '. mm')
             rain_count += 1
         if rain_count is hours_count:
             break
